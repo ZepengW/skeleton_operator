@@ -17,8 +17,6 @@ def re_rank_skeleton_data(skeleton_data,max_num=5):
     f_id = 0
     for f in skeleton_data:
         f_d = {}
-        print('frame id:{0}'.format(f_id))
-        print('skeleton_data_person_pre len:{0}'.format(len(skeleton_data_person_pre)))
         f_id += 1
         pids_map = get_person_ids(f,skeleton_data_person_pre)
         j = 0
@@ -33,7 +31,6 @@ def re_rank_skeleton_data(skeleton_data,max_num=5):
             if pid >= max_num or pid < 0:
                 continue
             f_d[pid] = copy.deepcopy(p)
-            print('pid:{0}'.format(pid))
         pids = list(f_d.keys())
         pids.sort()
 
@@ -57,7 +54,6 @@ def get_person_id(skeleton_data_person,skeleton_data_person_pre,thd=0.4,dis_thre
         if value < min_value or min_value == -1:
             index = idx
             min_value = value
-    print('value:{:.2f},id:{:d}'.format(min_value,index))
     if index == -1 or min_value > dis_thre:
         index = len(skeleton_data_person_pre)
     return index
@@ -82,7 +78,6 @@ def get_person_ids(skeleton_data_persons, skeleton_data_person_pre, thre = 0.4, 
             else:
                 value = value / num_j_avail
             dis_map[idx_n][idx_p] = value
-    print(dis_map)
     while not (dis_map > dis_thre).all():
         value_min = np.min(dis_map)
         min_pos = np.where(dis_map == value_min)

@@ -202,4 +202,4 @@ def draw_skeleton_batch(intput_dir,output_dir,resolution=(720,360),sub=''):
 if __name__ == '__main__':
     input_dir = './test'
     output_dir = './output_test'
-    draw_skeleton_batch(input_dir,output_dir,resolution=(2560,1440),sub='_no')
+    draw_skeleton_batch(input_dir,output_dir,resolution=(2560,1440),sub='_stay')

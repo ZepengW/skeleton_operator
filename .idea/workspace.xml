@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07dd7ef4-1c85-4b36-8c95-8e132002c86f" name="Default Changelist" comment="add skeleton_reranking.py&#10;and speed up the draw skeleton speed">
+    <list default="true" id="07dd7ef4-1c85-4b36-8c95-8e132002c86f" name="Default Changelist" comment="保持骨骼点序列 身份一致性">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/draw_skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/draw_skeleton.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skeleton_reranking.py" beforeDir="false" afterPath="$PROJECT_DIR$/skeleton_reranking.py" afterDir="false" />
@@ -52,7 +52,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../shijian" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
-  <component name="RunManager" selected="Python.skeleton_reranking">
+  <component name="RunManager" selected="Python.draw_skeleton (1)">
     <configuration name="draw_skeleton (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="skeleton_operator" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -121,8 +121,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.skeleton_reranking" />
         <item itemvalue="Python.draw_skeleton (1)" />
+        <item itemvalue="Python.skeleton_reranking" />
       </list>
     </recent_temporary>
   </component>
@@ -139,7 +139,7 @@
       <workItem from="1621229341581" duration="1260000" />
       <workItem from="1621739788553" duration="3290000" />
       <workItem from="1624673418382" duration="4758000" />
-      <workItem from="1624692108382" duration="8459000" />
+      <workItem from="1624692108382" duration="10063000" />
     </task>
     <task id="LOCAL-00001" summary="video skeleton draw">
       <created>1615192133612</created>
@@ -176,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624693782709</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="保持骨骼点序列 身份一致性">
+      <created>1624700849785</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1624700849785</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,21 +206,22 @@
     <MESSAGE value="Skeleton point and video consistency check" />
     <MESSAGE value="draw skeleton with black backgrond" />
     <MESSAGE value="add skeleton_reranking.py&#10;and speed up the draw skeleton speed" />
-    <option name="LAST_COMMIT_MESSAGE" value="add skeleton_reranking.py&#10;and speed up the draw skeleton speed" />
+    <MESSAGE value="保持骨骼点序列 身份一致性" />
+    <option name="LAST_COMMIT_MESSAGE" value="保持骨骼点序列 身份一致性" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/skeleton_reranking.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/draw_skeleton.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/skeleton_operator$skeleton_reranking.coverage" NAME="skeleton_reranking Coverage Results" MODIFIED="1624700585943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/skeleton_operator$draw_skeleton__1_.coverage" NAME="draw_skeleton (1) Coverage Results" MODIFIED="1624693663347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/skeleton_operator$skeleton_reranking.coverage" NAME="skeleton_reranking Coverage Results" MODIFIED="1624700688307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/skeleton_operator$draw_skeleton__1_.coverage" NAME="draw_skeleton (1) Coverage Results" MODIFIED="1624702144398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
