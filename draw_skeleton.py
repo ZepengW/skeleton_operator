@@ -81,14 +81,18 @@ def draw_skeleton_video(video_path, skeleton_data):
     output_dir: output video dir
     skeleton_data: the skeleton data. Type: List_Frames[List_Person[List_Joints[x,y,score]]]
 '''
-def draw_skeleton_black_backgrond(output_path,skeleton_data,resolution=(720,360)):
+def draw_skeleton_black_backgrond(output_path,skeleton_data,resolution=(720,360),num_p=1):
     print('generating: ' + output_path)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     frames = []
     for skeleton_frame in skeleton_data:
         pic_f = np.zeros([resolution[1],resolution[0],3],np.uint8)
+        count = 0
         for skeleton_person in skeleton_frame:
             pic_f = draw_joints_per_frame(pic_f,skeleton_person)
+            count += 1
+            if count >= num_p:
+                break
         frames.append(pic_f)
     video_out = cv2.VideoWriter(output_path,fourcc,20.0,resolution)
     for f in frames:
@@ -188,7 +192,7 @@ def draw_skeleton_batch(intput_dir,output_dir,resolution=(720,360),sub=''):
             continue
         output_path = os.path.join(output_dir,intput_file.split('.json')[0]+sub+'.avi')
         skeleton_data = convert_json_joints(os.path.join(intput_dir,intput_file))
-        #skeleton_data = re_rank_skeleton_data(skeleton_data)
+        skeleton_data = re_rank_skeleton_data(skeleton_data)
         draw_skeleton_black_backgrond(output_path,skeleton_data,resolution)
         time_e = time.time()
         print('cost time: {0}s'.format(time_e-time_b))
