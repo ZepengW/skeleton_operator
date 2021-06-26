@@ -46,10 +46,13 @@ def draw_skeleton_video(video_path, skeleton_data):
     height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
     fps = cap.get(cv2.CAP_PROP_FPS)
     total_frame = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+    print('frame list len:' + str(len(skeleton_data)))
+    print('video len:' + str(cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+    max_frames = min(len(skeleton_data),cap.get(cv2.CAP_PROP_FRAME_COUNT))
     print("drawing joints and skeletons")
     # draw joints and lines
     i = 0
-    while (cap.isOpened()):
+    while (cap.isOpened() and i < max_frames):
         ret, frame = cap.read()
         if not ret:
             print('bad frame')
@@ -74,7 +77,12 @@ def draw_skeleton_video(video_path, skeleton_data):
 '''
     convert json_file to the skeleton_list we need for draw
 '''
-def convert_json_skeleton(path):
+def convert_json_joints(path):
+    '''
+    convert json file to joints_list
+    :param path:
+    :return: [frames[persons[joints[x,y,score]]]]
+    '''
     if not os.path.exists(path):
         print("can't find file : " + path)
     result = []
@@ -92,7 +100,6 @@ def convert_json_skeleton(path):
                        for i in range(0, 18)]
                 f_l.append(p_l)
         result.append(f_l)
-        # define frame_id as user define
         framd_id.append(int(name_f.split('.')[0][-4:]))
         name.append(name_f)
     # sort
@@ -155,10 +162,27 @@ def draw_joints_per_frame(img, joints, vis_thres = 0.4):
             img = cv2.addWeighted(bg, transparency, img, 1 - transparency, 0)
     return img
 
-
+'''
+if __name__ == '__main__':
+    json_path = './yejian/waveknife_84.json'
+    video_path = './yejian/waveknife_84.mp4'
+    skeleton_data = convert_json_joints(json_path)
+    draw_skeleton_video(video_path, skeleton_data)
+'''
 
 if __name__ == '__main__':
-    video_path = '../shijian/demo/video/deliver_130.mp4'
-    json_path = '../shijian/demo/extract_skeleton/deliver_130.json'
-    skeleton_data = convert_json_skeleton(json_path)
-    draw_skeleton_video(video_path,skeleton_data)
+    print('input video dir:')
+    video_dir = input()
+    print('input skeleton json dir:')
+    json_dir = input()
+    video_list = os.listdir(video_dir)
+    for video_name in video_list:
+        if not '.mp4' in video_name:
+            continue
+        json_name = video_name.split('.')[0]+'.json'
+        json_path = os.path.join(json_dir,json_name)
+        video_path = os.path.join(video_dir,video_name)
+        if not os.path.exists(json_path):
+            print('can not find:'+json_path+' for video:'+video_path)
+        skeleton_data = convert_json_joints(json_path)
+        draw_skeleton_video(video_path,skeleton_data)
