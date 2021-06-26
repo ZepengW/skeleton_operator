@@ -11,6 +11,8 @@ import cv2
 import numpy as np
 import math
 import json
+import time
+from skeleton_reranking import re_rank_skeleton_data
 
 
 p_color = [(0, 255, 255), (0, 191, 255), (0, 255, 102), (0, 77, 255), (0, 255, 0),  # Nose, LEye, REye, LEar, REar
@@ -85,7 +87,6 @@ def draw_skeleton_black_backgrond(output_path,skeleton_data,resolution=(720,360)
     frames = []
     for skeleton_frame in skeleton_data:
         pic_f = np.zeros([resolution[1],resolution[0],3],np.uint8)
-        pic_f.fill(0)
         for skeleton_person in skeleton_frame:
             pic_f = draw_joints_per_frame(pic_f,skeleton_person)
         frames.append(pic_f)
@@ -136,31 +137,23 @@ def convert_json_joints(path):
 '''
     vis_thres: only the joints score >= vis_thres will display
 '''
-def draw_joints_per_frame(img, joints, vis_thres = 0.4):
+def draw_joints_per_frame(img, joints):
+    vis_thres = 0.4
     part_line = {}
     for n, j in enumerate(joints):
         if j[2] <= vis_thres:
             continue
         cor_x, cor_y = int(j[0]), int(j[1])
         part_line[n] = (int(cor_x), int(cor_y))
-        bg = img.copy()
         if n < len(p_color):
-            cv2.circle(bg, (int(cor_x), int(cor_y)), 2, p_color[n], -1)
+            cv2.circle(img, (int(cor_x), int(cor_y)), 2, p_color[n], -1)
         else:
-            cv2.circle(bg, (int(cor_x), int(cor_y)), 1, (255, 255, 255), 2)
-        # Now create a mask of logo and create its inverse mask also
-        if n < len(p_color):
-            transparency = float(max(0, min(1, j[2])))
-        else:
-            transparency = float(max(0, min(1, j[2] * 2)))
-        img = cv2.addWeighted(bg, transparency, img, 1 - transparency, 0)
+            cv2.circle(img, (int(cor_x), int(cor_y)), 1, (255, 255, 255), 2)
     # Draw limbs
     for i, (start_p, end_p) in enumerate(l_pair):
         if start_p in part_line and end_p in part_line:
             start_xy = part_line[start_p]
             end_xy = part_line[end_p]
-            bg = img.copy()
-
             X = (start_xy[0], end_xy[0])
             Y = (start_xy[1], end_xy[1])
             mX = np.mean(X)
@@ -171,16 +164,9 @@ def draw_joints_per_frame(img, joints, vis_thres = 0.4):
             polygon = cv2.ellipse2Poly((int(mX), int(mY)), (int(length / 2), int(stickwidth)), int(angle), 0, 360,
                                        1)
             if i < len(line_color):
-                cv2.fillConvexPoly(bg, polygon, line_color[i])
+                cv2.fillConvexPoly(img, polygon, line_color[i])
             else:
-                cv2.line(bg, start_xy, end_xy, (255, 255, 255), 1)
-            if n < len(p_color):
-                transparency = float(max(0, min(1, 0.5 * (joints[start_p][2] + joints[end_p][2]) - 0.1)))
-            else:
-                transparency = float(max(0, min(1, (joints[start_p][2] + joints[end_p][2]))))
-
-            # transparency = float(max(0, min(1, 0.5 * (kp_scores[start_p] + kp_scores[end_p])-0.1)))
-            img = cv2.addWeighted(bg, transparency, img, 1 - transparency, 0)
+                cv2.line(img, start_xy, end_xy, (255, 255, 255), 1)
     return img
 
 '''
@@ -196,16 +182,20 @@ def draw_skeleton_batch(intput_dir,output_dir,resolution=(720,360),sub=''):
     if not os.path.isdir(output_dir):
         os.mkdir(output_dir)
     for i,intput_file in enumerate(intput_files):
-        print('\rprocessing :[{0}/{1}]'.format(i+1,len(intput_files)),end='')
+        print('processing :[{0}/{1}]'.format(i+1,len(intput_files)))
+        time_b = time.time()
         if not '.json' in intput_file:
             continue
         output_path = os.path.join(output_dir,intput_file.split('.json')[0]+sub+'.avi')
         skeleton_data = convert_json_joints(os.path.join(intput_dir,intput_file))
+        #skeleton_data = re_rank_skeleton_data(skeleton_data)
         draw_skeleton_black_backgrond(output_path,skeleton_data,resolution)
+        time_e = time.time()
+        print('cost time: {0}s'.format(time_e-time_b))
 
 
 
 if __name__ == '__main__':
-    input_dir = '../DATASET/dimian/P1-C5-V1'
+    input_dir = './test'
     output_dir = './output_test'
-    draw_skeleton_batch(input_dir,output_dir,resolution=(2560,1440))
+    draw_skeleton_batch(input_dir,output_dir,resolution=(2560,1440),sub='_no')

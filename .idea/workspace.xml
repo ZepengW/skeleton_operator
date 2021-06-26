@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07dd7ef4-1c85-4b36-8c95-8e132002c86f" name="Default Changelist" comment="Skeleton point and video consistency check">
+    <list default="true" id="07dd7ef4-1c85-4b36-8c95-8e132002c86f" name="Default Changelist" comment="draw skeleton with black backgrond">
+      <change afterPath="$PROJECT_DIR$/skeleton_reranking.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/draw_skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/draw_skeleton.py" afterDir="false" />
     </list>
@@ -9,6 +10,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
     <envs>
@@ -107,7 +115,8 @@
       <workItem from="1621228341830" duration="775000" />
       <workItem from="1621229341581" duration="1260000" />
       <workItem from="1621739788553" duration="3290000" />
-      <workItem from="1624673418382" duration="3579000" />
+      <workItem from="1624673418382" duration="4758000" />
+      <workItem from="1624692108382" duration="1625000" />
     </task>
     <task id="LOCAL-00001" summary="video skeleton draw">
       <created>1615192133612</created>
@@ -130,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624673563442</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="draw skeleton with black backgrond">
+      <created>1624677275610</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1624677275610</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,20 +167,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="video skeleton draw" />
     <MESSAGE value="Skeleton point and video consistency check" />
-    <option name="LAST_COMMIT_MESSAGE" value="Skeleton point and video consistency check" />
+    <MESSAGE value="draw skeleton with black backgrond" />
+    <option name="LAST_COMMIT_MESSAGE" value="draw skeleton with black backgrond" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/draw_skeleton.py</url>
-          <line>94</line>
+          <line>95</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/skeleton_operator$draw_skeleton__1_.coverage" NAME="draw_skeleton (1) Coverage Results" MODIFIED="1624676967046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/skeleton_operator$draw_skeleton__1_.coverage" NAME="draw_skeleton (1) Coverage Results" MODIFIED="1624693663347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
