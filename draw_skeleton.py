@@ -75,6 +75,27 @@ def draw_skeleton_video(video_path, skeleton_data):
 
 
 '''
+    Method: draw skeleton lines and points on black backgrond
+    output_dir: output video dir
+    skeleton_data: the skeleton data. Type: List_Frames[List_Person[List_Joints[x,y,score]]]
+'''
+def draw_skeleton_black_backgrond(output_path,skeleton_data,resolution=(720,360)):
+    print('generating: ' + output_path)
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    frames = []
+    for skeleton_frame in skeleton_data:
+        pic_f = np.zeros([resolution[1],resolution[0],3],np.uint8)
+        pic_f.fill(0)
+        for skeleton_person in skeleton_frame:
+            pic_f = draw_joints_per_frame(pic_f,skeleton_person)
+        frames.append(pic_f)
+    video_out = cv2.VideoWriter(output_path,fourcc,20.0,resolution)
+    for f in frames:
+        video_out.write(f)
+    video_out.release()
+    print('generate finish')
+
+'''
     convert json_file to the skeleton_list we need for draw
 '''
 def convert_json_joints(path):
@@ -170,19 +191,21 @@ if __name__ == '__main__':
     draw_skeleton_video(video_path, skeleton_data)
 '''
 
-if __name__ == '__main__':
-    print('input video dir:')
-    video_dir = input()
-    print('input skeleton json dir:')
-    json_dir = input()
-    video_list = os.listdir(video_dir)
-    for video_name in video_list:
-        if not '.mp4' in video_name:
+def draw_skeleton_batch(intput_dir,output_dir,resolution=(720,360),sub=''):
+    intput_files = os.listdir(intput_dir)
+    if not os.path.isdir(output_dir):
+        os.mkdir(output_dir)
+    for i,intput_file in enumerate(intput_files):
+        print('\rprocessing :[{0}/{1}]'.format(i+1,len(intput_files)),end='')
+        if not '.json' in intput_file:
             continue
-        json_name = video_name.split('.')[0]+'.json'
-        json_path = os.path.join(json_dir,json_name)
-        video_path = os.path.join(video_dir,video_name)
-        if not os.path.exists(json_path):
-            print('can not find:'+json_path+' for video:'+video_path)
-        skeleton_data = convert_json_joints(json_path)
-        draw_skeleton_video(video_path,skeleton_data)
+        output_path = os.path.join(output_dir,intput_file.split('.json')[0]+sub+'.avi')
+        skeleton_data = convert_json_joints(os.path.join(intput_dir,intput_file))
+        draw_skeleton_black_backgrond(output_path,skeleton_data,resolution)
+
+
+
+if __name__ == '__main__':
+    input_dir = '../DATASET/dimian/P1-C5-V1'
+    output_dir = './output_test'
+    draw_skeleton_batch(input_dir,output_dir,resolution=(2560,1440))
